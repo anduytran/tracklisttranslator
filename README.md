@@ -1,18 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Spotify Playlist Meaning Decoder
+
+A lightweight Next.js + Tailwind CSS app that lets you paste a public Spotify playlist URL and instantly decipher its themes and meaning by fetching track metadata, retrieving lyrics from Genius, and running it through artificial intelligence.
+
+---
+
+## Features
+
+- **No account needed** — no user signup or OAuth UI  
+- **Spotify API Integration** — fetch playlist tracks without user login  
+- **Genius API integration** — pull lyrics for each track (with in‑memory caching)  
+- **Basic analysis pipeline** — per‑track analysis
+- **Responsive UI** — styled with Tailwind CSS  
+- **Dockerized** — run the entire app in one container  
+
+---
+
+## Tech Stack
+
+- **Framework**: Next.js (App + API Routes)  
+- **Styling**: Tailwind CSS  
+- **APIs**:  
+  - Spotify Web API (Client Credentials grant)  
+  - Genius API
+  - TBD AI
+- **Containerization**: Docker (multi‑stage Dockerfile)  
+
+---
+
+## Prerequisites
+
+- Node.js ≥ 16.x & npm  
+- Docker (optional, for containerized runs)  
+- Spotify Developer account (Client ID & Secret)  
+- Genius API access token  
+
+---
 
 ## Getting Started
 
-First, run the development server:
+**Clone the repo, run the development server**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    # or
+    pnpm dev
+    # or
+    bun dev
+    ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
