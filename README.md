@@ -40,7 +40,8 @@ A lightweight Next.js + Tailwind CSS app that lets you paste a public Spotify pl
 
 **Clone the repo, run the development server**
 
-    ```bash
+    ```
+    bash
     npm run dev
     # or
     yarn dev
