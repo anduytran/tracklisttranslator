@@ -38,7 +38,18 @@ A lightweight Next.js + Tailwind CSS app that lets you paste a public Spotify pl
 
 ## Getting Started
 
-**Clone the repo, run the development server**
+**Clone the repo**
+```
+git clone https://github.com/YOUR-USERNAME/tracklisttranslator
+```
+
+**Install Dependencies**
+
+```
+npm install next@latest react@latest react-dom@latest
+```
+
+**Run the development server**
 
     ```
     bash
