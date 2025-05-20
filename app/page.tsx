@@ -13,8 +13,8 @@ export default function Home() {
     console.log('Trying API route:', playlistUrl);
     try {
         console.log('Spotify fetch URL:', playlistUrl);
-        const response = await fetch(`/api/analyze?url=https://api.spotify.com/v1/playlists/${playlistUrl}/tracks`); // https://api.spotify.com/v1/playlists/
-        const json = await response.json();
+        const response = await fetch(`/api/?url=${playlistUrl}`)
+        const json = await response.json()
         if (!response.ok) {
             throw new Error(json.error || 'Failed to fetch playlist');
         }

@@ -26,7 +26,7 @@ async function getAccessToken(): Promise<string> {
   return access_token;
 }
 
-async function getPlaylistID(urlStr: string): Promise<string | null> {
+export async function getPlaylistID(urlStr: string): Promise<string | null> {
   try {
     const u = new URL(urlStr);
     const parts = u.pathname.split('/');

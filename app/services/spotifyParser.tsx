@@ -15,7 +15,6 @@ export interface ParsedTrack {
 }
 
 interface RawImage {
-    
   url: string
   height: number
   width: number
@@ -42,10 +41,11 @@ interface RawTrackObject {
   explicit: boolean
 }
 
-interface RawItem {
+export interface RawItem {
   added_at?: string
   added_by?: { id: string }
   track: RawTrackObject
+  is_local: boolean
 }
 
 interface RawPaging {
