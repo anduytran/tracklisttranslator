@@ -12,7 +12,8 @@ export default function Home() {
     const handleAnalyze = async (playlistUrl: string) => {setLoading(true); setError(null); setTracks([]);
     console.log('Trying API route:', playlistUrl);
     try {
-        const response = await fetch(`/api/analyze?url=${encodeURIComponent(playlistUrl)}`);
+        console.log('Spotify fetch URL:', playlistUrl);
+        const response = await fetch(`/api/analyze?url=https://api.spotify.com/v1/playlists/${playlistUrl}/tracks`); // https://api.spotify.com/v1/playlists/
         const json = await response.json();
         if (!response.ok) {
             throw new Error(json.error || 'Failed to fetch playlist');

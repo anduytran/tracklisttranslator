@@ -26,6 +26,22 @@ async function getAccessToken(): Promise<string> {
   return access_token;
 }
 
+async function getPlaylistID(urlStr: string): Promise<string | null> {
+  try {
+    const u = new URL(urlStr);
+    const parts = u.pathname.split('/');
+    const i = parts.indexOf('playlist');
+    if (i !== -1 && parts.length > i + 1) {
+      return parts[i + 1];
+    }
+  } catch {
+
+  }
+  // use regex
+  const match = urlStr.match(/playlist\/([^?\/]+)/);
+  return match ? match[1] : null;
+}
+
 async function fetchPlaylistPage(playlistId: string, offset = 0, limit  = 100) {
     const token = await getAccessToken();
     const url = `${API_BASE}/playlists/${playlistId}/tracks`;
