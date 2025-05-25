@@ -44,7 +44,7 @@ export async function getPlaylistID(urlStr: string): Promise<string | null> {
 
 async function fetchPlaylistPage(playlistId: string, offset = 0, limit  = 100) {
     const token = await getAccessToken();
-    const url = `${API_BASE}/playlists/${playlistId}/tracks`;
+    const url = `${API_BASE}/playlists/${playlistId}/tracks?limit=${limit}&offset=${offset}`;
     const response = await fetch(url, {headers: {Authorization: `Bearer ${token}` },});
     if (!response.ok) {
         throw new Error(`Spotify API error: ${response.status} ${await response.text()}`);
