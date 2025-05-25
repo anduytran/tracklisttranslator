@@ -23,9 +23,7 @@ export async function GET(request: Request) {
 
   try {
     // 1. Fetch raw items from Spotify
-    const items: SpotifyApi.PlaylistTrackObject[] = await getPlaylistTracks(
-      playlistId
-    )
+    const items: SpotifyApi.PlaylistTrackObject[] = await getPlaylistTracks(playlistId)
 
     // 2. Drop any null‐track entries
     const nonNullItems = items.filter(

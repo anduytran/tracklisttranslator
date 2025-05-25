@@ -42,7 +42,7 @@ export async function getPlaylistID(urlStr: string): Promise<string | null> {
   return match ? match[1] : null;
 }
 
-async function fetchPlaylistPage(playlistId: string, offset = 0, limit  = 100) {
+async function fetchPlaylistPage(playlistId: string, offset = 0, limit  = 50) {
     const token = await getAccessToken();
     const url = `${API_BASE}/playlists/${playlistId}/tracks?limit=${limit}&offset=${offset}`;
     const response = await fetch(url, {headers: {Authorization: `Bearer ${token}` },});
@@ -55,7 +55,8 @@ async function fetchPlaylistPage(playlistId: string, offset = 0, limit  = 100) {
 export async function getPlaylistTracks(playlistId: string): Promise<SpotifyApi.PlaylistTrackResponse['items']> {
     const first = await fetchPlaylistPage(playlistId, 0);
     const pages = Math.ceil(first.total / first.limit);
-    let items   = first.items;
+    console.log(`Total = ${first.total} \nPages = ${first.limit}`);
+    let items = first.items;
 
     for (let i = 1; i < pages; i++) {
         const page = await fetchPlaylistPage(playlistId, i * first.limit, first.limit);
