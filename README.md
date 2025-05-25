@@ -43,6 +43,13 @@ A lightweight Next.js + Tailwind CSS app that lets you paste a public Spotify pl
 git clone https://github.com/YOUR-USERNAME/tracklisttranslator
 ```
 
+**Set up local environment keys**
+```
+create a .env.local file and add
+SPOTIFY_CLIENT_ID = YOUR_ID
+SPOTIFY_CLIENT_SECRET = YOUR_SECRET
+```
+
 **Install Dependencies**
 
 ```
