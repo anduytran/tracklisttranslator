@@ -83,7 +83,7 @@ export async function GET(request: Request) {
       })
     );
 
-    return NextResponse.json({ tracks })
+    return NextResponse.json({ tracks: withLyrics})
   } catch (err: unknown) {
     console.error(err)
     const message = err instanceof Error ? err.message : 'Unknown error'
