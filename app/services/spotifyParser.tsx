@@ -12,6 +12,7 @@ export interface ParsedTrack {
   addedAt?: string
   addedById?: string
   explicit?: boolean
+  lyrics?: string
 }
 
 interface RawImage {
