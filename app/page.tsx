@@ -9,11 +9,11 @@ export default function Home() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleAnalyze = async (playlistUrl: string) => {setLoading(true); setError(null); setTracks([]);
+    const handleAnalyze = async (playlistUrl: string) => {setLoading(true); setError(null); setTracks([]); // gets playlist url
     console.log('Trying API route:', playlistUrl);
     try {
         console.log('Spotify fetch URL:', playlistUrl);
-        const response = await fetch(`/api/?url=${playlistUrl}`)
+        const response = await fetch(`/api/?url=${playlistUrl}`) // reroutes to /api/route.tsx
         const json = await response.json()
         if (!response.ok) {
             throw new Error(json.error || 'Failed to fetch playlist');
