@@ -12,12 +12,13 @@ export default function Home() {
     const handleAnalyze = async (playlistUrl: string) => {setLoading(true); setError(null); setTracks([]); // gets playlist url
     console.log('Trying API route:', playlistUrl);
     try {
-        console.log('Spotify fetch URL:', playlistUrl);
-        const response = await fetch(`/api/?url=${playlistUrl}`) // reroutes to /api/route.tsx
-        const json = await response.json()
-        if (!response.ok) {
-            throw new Error(json.error || 'Failed to fetch playlist');
-        }
+      console.log('Spotify fetch URL:', playlistUrl);
+      const response = await fetch(`/api/?url=${playlistUrl}`) // reroutes to /api/route.tsx
+      const json = await response.json()
+      if (!response.ok) {
+          throw new Error(json.error || 'Failed to fetch playlist');
+      }
+      console.log("API returned this object:", json);
       setTracks(json.tracks);
     } catch (err: any) {
       setError(err.message);
@@ -58,6 +59,17 @@ export default function Home() {
                 {/* Song title & artist */}
                 <h2 className="mt-3 text-lg font-semibold">{track.name}</h2>
                 <p className="text-gray-600">{track.artist}</p>
+
+                {track.lyrics ? (
+                <pre className="max-h-24 overflow-y-auto text-sm whitespace-pre-wrap mb-2"> {track.lyrics.substring(0, 150).trim()}…{' '}
+                  <span className="text-blue-600 cursor-pointer" title="Show full lyrics">(more)
+                  </span>
+                </pre>
+                ) : (
+                  <p className="text-xs italic text-gray-500 mb-2">
+                    No lyrics found.
+                  </p>
+                )}
 
                 {/* Link back to Spotify */}
                 <a

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getPlaylistID, getPlaylistTracks } from '@/services/spotify'
 import { parsePlaylistTracks } from '@/services/spotifyParser'
+import { fetchLyricsForSong } from '@/services/lyrics'
 import type { RawItem } from '@/services/spotifyParser'
 
 export async function GET(request: Request) {
@@ -74,7 +75,15 @@ export async function GET(request: Request) {
     // 4. Parse into your front-end shape
     const tracks = parsePlaylistTracks({ items: rawItems })
 
-    return NextResponse.json({ tracks })
+    const withLyrics = await Promise.all(tracks.map(async (trackObj) => {
+        // trackObj.artist & trackObj.name came from parsePlaylistTracks
+        const lyricsText = await fetchLyricsForSong(trackObj.artist, trackObj.name);
+        return {...trackObj, lyrics: lyricsText,  // may be string or null
+        };
+      })
+    );
+
+    return NextResponse.json({ tracks: withLyrics})
   } catch (err: unknown) {
     console.error(err)
     const message = err instanceof Error ? err.message : 'Unknown error'
