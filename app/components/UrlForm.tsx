@@ -8,13 +8,10 @@ interface urlFormProp {
 
 export default function UrlForm({ onSubmit }: urlFormProp) { // function receives the "prop"
   const [url, setUrl] = useState(''); // holds what the user inputted
-
   const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault(); // no page reload
   if (!url.trim()) return; // no blank submissions w/ trimmed whitespace
-    
     // will add further spotify link verification here
-
     onSubmit(url.trim());
   };
 
