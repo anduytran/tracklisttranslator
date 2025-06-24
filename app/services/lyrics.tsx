@@ -40,7 +40,7 @@ export async function fetchLyricsForSong(artist: string, title: string): Promise
           console.warn(`Server error ${res.status} at ${url}`);
           if (attempt < maxRetries) {
             // exponential back-off: 500ms, 1000ms, 2000ms…
-            await wait(250 * Math.pow(2, attempt - 1));
+            await wait(500 * Math.pow(2, attempt - 1));
             continue;
           } else {
             break;
