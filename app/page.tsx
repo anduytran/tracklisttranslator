@@ -78,6 +78,23 @@ export default function Home() {
         id="messages"
         className="flex-1 overflow-y-auto py-4 space-y-4"
       >
+        <div className="flex justify-end mx-4">
+          <div className="bg-blue-600 text-white px-4 py-2 rounded-2xl max-w-xs break-words">
+            Hey, my friend made me a playlist... They totally like me right?
+          </div>
+        </div>
+
+        <div className="flex justify-start mx-4">
+          <div className="bg-gray-200 px-4 py-2 rounded-2xl max-w-xs">
+            You're so delulu... I'll take a lookie
+          </div>
+        </div>
+
+        <div className="flex justify-end mx-4">
+          <div className="bg-blue-600 text-white px-4 py-2 rounded-2xl max-w-xs break-words">
+            OKAY ILL SEND IT RQ
+          </div>
+        </div>
         {/* • User’s input bubble (right-aligned) */}
         {lastLink && (
           <div className="flex justify-end">

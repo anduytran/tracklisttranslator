@@ -13,7 +13,6 @@ export default function UrlForm({ onSubmit }: urlFormProp) { // function receive
     if (!url.trim()) return; // no blank submissions w/ trimmed whitespace
     // will add further spotify link verification here
     onSubmit(url.trim());
-    setUrl('')
   };
 
   
