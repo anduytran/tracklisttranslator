@@ -56,15 +56,16 @@ export default function Home() {
         {/* img + name */}
         <div className="flex flex-col items-center">
           <img
-            src="" // placeholder img
+            src="placeholder" // placeholder img
             alt="Playlist Analyzer"
             className="w-8 h-8 rounded-full mb-1"
           />
           <div className="flex items-center space-x-1">
             <span className="text-base font-semibold">
-              Playlist Analyzer &gt;
+              Playlist Analyzer
             </span>
             <span className="text-gray-400 text-sm">
+               &gt;
             </span>
           </div>
         </div>
