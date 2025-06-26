@@ -45,9 +45,9 @@ export default function Home() {
     
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50 px-4">
+    <div className="flex flex-col h-screen bg-gray-50 px-100">
       {/* ─── iOS-style header ─── */}
-      <div className="bg-white border-b flex items-center justify-between px-4 py-3">
+      <div className="bg-gray-100 border-b flex items-center justify-between px-4 py-3">
         {/* ← back button */}
         <button className="text-blue-600 text-xl">
           ←
@@ -81,7 +81,7 @@ export default function Home() {
       >
         <div className="flex justify-end mx-4">
           <div className="bg-blue-600 text-white px-4 py-2 rounded-2xl max-w-xs break-words">
-            Hey, my friend made me a playlist... They totally like me right?
+            Hey, my crush just made me a playlist... They totally like me right?
           </div>
         </div>
 
