@@ -1,120 +1,135 @@
 'use client'
 
-import UrlForm from '@components/UrlForm'
-import type {ParsedTrack} from '@/services/spotifyParser'
-import {useState} from 'react'
+import UrlForm from '@components/UrlForm';
+import type { ParsedTrack } from '@/services/spotifyParser';
+import React, { useRef, useEffect, useState } from 'react';
+
+function ThreeDots() {
+  const dotBase =
+    'w-2 h-2 bg-gray-500 rounded-full animate-bounce inline-block';
+  return (
+    <div className="flex space-x-1">
+      <span className={dotBase} style={{ animationDelay: '0ms' }} />
+      <span className={dotBase} style={{ animationDelay: '200ms' }} />
+      <span className={dotBase} style={{ animationDelay: '400ms' }} />
+    </div>
+  );
+}
 
 export default function Home() {
-    const [tracks, setTracks] = useState<ParsedTrack[]>([])
-    const [interpretation, setInterpretation] = useState<string | null>(null)
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState<string | null>(null)
+  const [tracks, setTracks] = useState<ParsedTrack[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [lastLink, setLastLink] = useState<string | null>(null);
+  const [interpretation, setInterpretation] = useState<string | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-    const handleAnalyze = async (playlistUrl: string) => {
-        setLoading(true)
-        setError(null)
-        setTracks([])
-        setInterpretation(null)
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [lastLink, loading, tracks, interpretation]);
 
-        try {
-            const response = await fetch(`/api/?url=${encodeURIComponent(playlistUrl)}`)
-            const json = await response.json()
+  const handleAnalyze = async (playlistUrl: string) => {
+    setLastLink(playlistUrl);
+    setLoading(true);
+    setError(null);
+    setTracks([]);
+    setInterpretation(null);
 
-            if (!response.ok) {
-                throw new Error(json.error || 'Failed to fetch playlist')
-            }
+    console.log('Trying API route:', playlistUrl);
+    try {
+      console.log('Spotify fetch URL:', playlistUrl);
+      const response = await fetch(`/api/?url=${encodeURIComponent(playlistUrl)}`);
+      const json = await response.json();
 
-            console.log('API returned this object:', json)
-            setTracks(json.tracks)                     // array of { id, name, artist, lyrics, … }
-            setInterpretation(json.interpretation)      // the “meaning” string from Gemini
-        } catch (err: any) {
-            setError(err.message)
-        } finally {
-            setLoading(false)
-        }
+      if (!response.ok) {
+        throw new Error(json.error || 'Failed to fetch playlist');
+      }
+
+      console.log('API returned this object:', json);
+      setTracks(json.tracks);
+      setInterpretation(json.interpretation);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    return (
-        <main className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-            <div className="w-screen max-w-xxl">
-                <h1 className="text-2xl font-bold mb-6 text-center">
-                    Spotify Playlist Meaning Analyzer
-                </h1>
+  return (
+    <div className="flex flex-col h-screen bg-gray-50 px-100">
+      {/* ─── iOS-style header ─── */}
+      <div className="bg-gray-100 border-b flex items-center justify-between px-4 py-3">
+        {/* ← back button */}
+        <button className="text-blue-600 text-xl">←</button>
 
-                <UrlForm onSubmit={handleAnalyze}/>
+        {/* img + name */}
+        <div className="flex flex-col items-center">
+          <img
+            src="placeholder"
+            alt="Playlist Analyzer"
+            className="w-8 h-8 rounded-full mb-1"
+          />
+          <div className="flex items-center space-x-1">
+            <span className="text-base font-semibold">Playlist Analyzer</span>
+            <span className="text-gray-400 text-sm">&gt;</span>
+          </div>
+        </div>
 
-                {/* Show loading / error */}
-                {loading && (
-                    <p className="mt-4 text-center text-gray-600">
-                        Fetching playlist data…
-                    </p>
-                )}
-                {error && (
-                    <p className="mt-4 text-center text-red-600">Error: {error}</p>
-                )}
+        {/* spacer */}
+        <span className="text-blue-600 text-xl" />
+      </div>
 
-                {/* Show “interpretation” once it’s available */}
-                {!loading && !error && interpretation && (
-                    <div className="mt-6 p-4 bg-white rounded-lg shadow">
-                        <h2 className="text-lg font-semibold mb-2">
-                            Playlist Meaning
-                        </h2>
-                        <p className="text-gray-800">{interpretation}</p>
-                    </div>
-                )}
-
-                {/* Once tracks are present, render them */}
-                {!loading && !error && tracks.length > 0 && (
-                    <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {tracks.map((track) => (
-                            <div
-                                key={track.id}
-                                className="bg-white rounded-lg shadow p-4 flex flex-col"
-                            >
-                                {/* Album art */}
-                                <img
-                                    src={track.albumImageUrl}
-                                    alt={track.albumName}
-                                    className="w-full h-48 object-cover rounded"
-                                />
-
-                                {/* Song title & artist */}
-                                <h2 className="mt-3 text-lg font-semibold">
-                                    {track.name}
-                                </h2>
-                                <p className="text-gray-600">{track.artist}</p>
-
-                                {/* Lyrics snippet */}
-                                {track.lyrics ? (
-                                    <pre className="max-h-48 overflow-y-auto text-sm whitespace-pre-wrap mb-2">
-                    {track.lyrics.substring(0, 150).trim()}…{' '}
-                                        <span
-                                            className="text-blue-600 cursor-pointer"
-                                            title="Show full lyrics"
-                                        >
-                      (more)
-                    </span>
-                  </pre>
-                                ) : (
-                                    <p className="text-xs italic text-gray-500 mb-2">
-                                        No lyrics found.
-                                    </p>
-                                )}
-
-                                {/* Link back to Spotify */}
-                                <a
-                                    href={track.spotifyUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="mt-auto text-blue-600 hover:underline"
-                                >
-                                    Open in Spotify
-                                </a>
-                            </div>
-                        ))}
-                    </div>
-                )}
+      {/* ── Message area ──── */}
+      <div id="messages" className="flex-1 overflow-y-auto py-4 space-y-4">
+        {/* • User’s input bubble (right-aligned) */}
+        {lastLink && (
+          <div className="flex justify-end mx-4">
+            <div className="bg-blue-600 text-white px-4 py-2 rounded-2xl max-w-xs break-words">
+              {lastLink}
             </div>
-        </main>
-    )
+          </div>
+        )}
+
+        {/* • Loading “…” bubble (left-aligned) */}
+        {loading && (
+          <div className="flex justify-start mx-4">
+            <div className="bg-gray-200 px-4 py-2 rounded-2xl inline-flex">
+              <ThreeDots />
+            </div>
+          </div>
+        )}
+
+        {/* • Gemini interpretation bubble (left-aligned) */}
+        {!loading && interpretation && (
+          <div className="flex justify-start mx-4">
+            <div className="bg-gray-200 px-4 py-2 rounded-2xl max-w-xs whitespace-pre-wrap">
+              <p>{interpretation}</p>
+            </div>
+          </div>
+        )}
+
+        {/* • Result bubbles (track list) */}
+        {!loading &&
+          tracks.map((track) => (
+            <div key={track.id} className="flex justify-start mx-4">
+              <div className="bg-gray-200 px-4 py-2 rounded-2xl max-w-xs">
+                <p className="font-semibold">{track.name}</p>
+                <p className="text-sm text-gray-600">{track.artist}</p>
+              </div>
+            </div>
+          ))}
+
+        {/* Anchor to scroll into view */}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* ── Input bar fixed at bottom ──── */}
+      <div className="border-t px-4 py-3 bg-white">
+        <UrlForm onSubmit={handleAnalyze} />
+        {error && (
+          <p className="mt-2 text-red-600 text-sm text-center">{error}</p>
+        )}
+      </div>
+    </div>
+  );
 }

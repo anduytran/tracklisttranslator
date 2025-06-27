@@ -27,7 +27,7 @@ export async function fetchLyricsForSong(artist: string, title: string): Promise
         console.log(`Trying ${url}`);
         const res = await fetch(url);
         // If we get 404, no lyrics found
-        if (res.status === 404) {
+        if (res.status === 404 || res.status === 504) {
           break;
           // console.warn(`No lyrics at ${url}`);
           // continue;
