@@ -79,16 +79,37 @@ export default function Home() {
         <span className="text-blue-600 text-xl" />
       </div>
 
-      {/* ── Message area ──── */}
-      <div id="messages" className="flex-1 overflow-y-auto py-4 space-y-4">
+      {/* ── Message area */}
+      <div
+        id="messages"
+        className="flex-1 overflow-y-auto py-4 space-y-4"
+      >
+        <div className="flex justify-end mx-4">
+          <div className="bg-blue-600 text-white px-4 py-2 rounded-2xl max-w-xs break-words">
+            Hey, my crush just made me a playlist... They totally like me right?
+          </div>
+        </div>
+
+        <div className="flex justify-start mx-4">
+          <div className="bg-gray-200 px-4 py-2 rounded-2xl max-w-xs">
+            You're so delulu... I'll take a lookie
+          </div>
+        </div>
+
+        <div className="flex justify-end mx-4">
+          <div className="bg-blue-600 text-white px-4 py-2 rounded-2xl max-w-xs break-words">
+            OKAY ILL SEND IT RQ
+          </div>
+        </div>
         {/* • User’s input bubble (right-aligned) */}
         {lastLink && (
-          <div className="flex justify-end mx-4">
+          <div className="flex justify-end">
             <div className="bg-blue-600 text-white px-4 py-2 rounded-2xl max-w-xs break-words">
               {lastLink}
             </div>
           </div>
         )}
+
 
         {/* • Loading “…” bubble (left-aligned) */}
         {loading && (
