@@ -48,6 +48,7 @@ git clone https://github.com/YOUR-USERNAME/tracklisttranslator
 create a .env.local file and add
 SPOTIFY_CLIENT_ID = YOUR_ID
 SPOTIFY_CLIENT_SECRET = YOUR_SECRET
+GEMINI_API_KEY = YOUR_KEY
 ```
 
 **Install Dependencies**
