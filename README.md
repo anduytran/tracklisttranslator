@@ -21,9 +21,7 @@ A lightweight Next.js + Tailwind CSS app that lets you paste a public Spotify pl
 - **Styling**: Tailwind CSS  
 - **APIs**:  
   - Spotify Web API (Client Credentials grant)  
-  - Genius API
-  - TBD AI
-- **Containerization**: Docker (multi‑stage Dockerfile)  
+  - Gemini AI
 
 ---
 
@@ -31,8 +29,8 @@ A lightweight Next.js + Tailwind CSS app that lets you paste a public Spotify pl
 
 - Node.js ≥ 16.x & npm  
 - Docker (optional, for containerized runs)  
-- Spotify Developer account (Client ID & Secret)  
-- Genius API access token  
+- Spotify Developer account (Client ID & Secret)
+- Gemini API Key
 
 ---
 
